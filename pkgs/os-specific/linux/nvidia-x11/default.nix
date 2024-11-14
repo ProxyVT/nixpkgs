@@ -130,6 +130,15 @@ rec {
     sha256_aarch64 = "sha256-e+QvE+S3Fv3JRqC9ZyxTSiCu8gJdZXSz10gF/EN6DY0=";
     settingsSha256 = "sha256-kftQ4JB0iSlE8r/Ze/+UMnwLzn0nfQtqYXBj+t6Aguk=";
     persistencedSha256 = "sha256-iYoSib9VEdwjOPBP1+Hx5wCIMhW8q8cCHu9PULWfnyQ=";
+
+    patchFlags = [ "-p1" "-d" "kernel" ];
+    patches = [
+      # Source corresponding to https://aur.archlinux.org/cgit/aur.git/tree/kernel-6.10.patch?h=nvidia-470xx-utils
+      (fetchpatch {
+        url = "https://aur.archlinux.org/cgit/aur.git/plain/kernel-6.10.patch?h=nvidia-470xx-utils&id=df0426ab325cb0ad8909a3058d66336ce1f872ce";
+        hash = "sha256-g9PBj5xn5v4UJhoji7Ta/jQ9TBYyVk8+nP5rffadOvc=";
+      })
+    ];
   };
 
   # Last one supporting x86
