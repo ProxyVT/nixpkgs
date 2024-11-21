@@ -34,11 +34,20 @@ let
   drm_fop_flags_linux_612_patch  = fetchpatch {
     url = "https://github.com/Binary-Eater/open-gpu-kernel-modules/commit/8ac26d3c66ea88b0f80504bdd1e907658b41609d.patch";
     hash = "sha256-+SfIu3uYNQCf/KXhv4PWvruTVKQSh4bgU1moePhe57U=";
+  };
 
   # https://forums.developer.nvidia.com/t/gpl-only-symbols-follow-pte-and-rcu-read-unlock-prevent-470-256-02-to-build-with-kernel-6-10/300052
   nvidia_470_kernel_611_patch = fetchpatch {
     url = "https://aur.archlinux.org/cgit/aur.git/plain/kernel-6.10.patch?h=nvidia-470xx-utils&id=df0426ab325cb0ad8909a3058d66336ce1f872ce";
     hash = "sha256-0yT7IeP3K49qIv4HoUk26iRhh2LcC5kuFIrBGnMBa00=";
+    stripLen = 1;
+    extraPrefix = "kernel/";
+  };
+
+  # https://gist.github.com/joanbm/a6d3f7f873a60dec0aa4a734c0f1d64e
+  nvidia_470_kernel_612_patch = fetchpatch {
+    url = "https://gist.githubusercontent.com/joanbm/a6d3f7f873a60dec0aa4a734c0f1d64e/raw/6bae5606c033b6c6c08233523091992370e357b7/nvidia-470xx-fix-linux-6.12.patch";
+    hash = "sha256-6nbzcRTRCxW8GDAhB8Zwx9rVcCzwPtVYlqoUhL9gxlY=";
     stripLen = 1;
     extraPrefix = "kernel/";
   };
@@ -152,6 +161,7 @@ rec {
 
     patches = [
       nvidia_470_kernel_611_patch
+      nvidia_470_kernel_612_patch
     ];
   };
 
