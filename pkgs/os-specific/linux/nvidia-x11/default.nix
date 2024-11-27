@@ -35,6 +35,14 @@ let
     url = "https://github.com/Binary-Eater/open-gpu-kernel-modules/commit/8ac26d3c66ea88b0f80504bdd1e907658b41609d.patch";
     hash = "sha256-+SfIu3uYNQCf/KXhv4PWvruTVKQSh4bgU1moePhe57U=";
   };
+
+  # https://forums.developer.nvidia.com/t/gpl-only-symbols-follow-pte-and-rcu-read-unlock-prevent-470-256-02-to-build-with-kernel-6-10/300052
+  nvidia_470_kernel_611_patch = fetchpatch {
+    url = "https://aur.archlinux.org/cgit/aur.git/plain/kernel-6.10.patch?h=nvidia-470xx-utils&id=df0426ab325cb0ad8909a3058d66336ce1f872ce";
+    hash = "sha256-0yT7IeP3K49qIv4HoUk26iRhh2LcC5kuFIrBGnMBa00=";
+    stripLen = 1;
+    extraPrefix = "kernel/";
+  };
 in
 rec {
   mkDriver = generic;
@@ -142,6 +150,10 @@ rec {
     sha256_aarch64 = "sha256-e+QvE+S3Fv3JRqC9ZyxTSiCu8gJdZXSz10gF/EN6DY0=";
     settingsSha256 = "sha256-kftQ4JB0iSlE8r/Ze/+UMnwLzn0nfQtqYXBj+t6Aguk=";
     persistencedSha256 = "sha256-iYoSib9VEdwjOPBP1+Hx5wCIMhW8q8cCHu9PULWfnyQ=";
+
+    patches = [
+      nvidia_470_kernel_611_patch
+    ];
   };
 
   # Last one supporting x86
