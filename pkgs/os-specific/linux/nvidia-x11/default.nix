@@ -43,6 +43,14 @@ let
     stripLen = 1;
     extraPrefix = "kernel/";
   };
+
+  # https://gist.github.com/joanbm/a6d3f7f873a60dec0aa4a734c0f1d64e
+  nvidia_470_kernel_612_patch = fetchpatch {
+    url = "https://gist.githubusercontent.com/joanbm/a6d3f7f873a60dec0aa4a734c0f1d64e/raw/6bae5606c033b6c6c08233523091992370e357b7/nvidia-470xx-fix-linux-6.12.patch";
+    hash = "sha256-6nbzcRTRCxW8GDAhB8Zwx9rVcCzwPtVYlqoUhL9gxlY=";
+    stripLen = 1;
+    extraPrefix = "kernel/";
+  };
 in
 rec {
   mkDriver = generic;
@@ -153,6 +161,7 @@ rec {
 
     patches = [
       nvidia_470_kernel_611_patch
+      nvidia_470_kernel_612_patch
     ];
   };
 
