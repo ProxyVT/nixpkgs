@@ -28,12 +28,13 @@ stdenv.mkDerivation (finalAttrs: {
   nativeBuildInputs = [
     meson
     vala
+    pkg-config
     gettext
-    ninja
+
   ];
 
   buildInputs = [
-    pkg-config
+    ninja
     alsa-lib
     xfce4-panel
   ];
