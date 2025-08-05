@@ -36,6 +36,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   buildInputs = [
     xfce4-panel
+    pkg-config
   ];
 
   passthru.updateScript = nix-update-script { };
