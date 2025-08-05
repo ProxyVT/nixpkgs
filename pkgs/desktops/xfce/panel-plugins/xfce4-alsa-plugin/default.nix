@@ -31,12 +31,11 @@ stdenv.mkDerivation (finalAttrs: {
     pkg-config
     ninja
     gettext
-    alsa-lib
+    xfce4-panel
   ];
 
   buildInputs = [
-    xfce4-panel
-    pkg-config
+    alsa-lib
   ];
 
   passthru.updateScript = nix-update-script { };
