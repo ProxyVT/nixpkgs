@@ -29,12 +29,11 @@ stdenv.mkDerivation (finalAttrs: {
     meson
     vala
     pkg-config
-    gettext
-
+    ninja
   ];
 
   buildInputs = [
-    ninja
+    gettext
     alsa-lib
     xfce4-panel
   ];
