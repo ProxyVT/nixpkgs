@@ -30,11 +30,11 @@ stdenv.mkDerivation (finalAttrs: {
     vala
     pkg-config
     ninja
+    gettext
+    alsa-lib
   ];
 
   buildInputs = [
-    gettext
-    alsa-lib
     xfce4-panel
   ];
 
