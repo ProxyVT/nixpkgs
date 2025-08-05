@@ -26,16 +26,17 @@ stdenv.mkDerivation (finalAttrs: {
   strictDeps = true;
 
   nativeBuildInputs = [
+
+    vala
+    pkg-config
+    gettext
     ninja
   ];
 
   buildInputs = [
+    meson
     alsa-lib
     xfce4-panel
-    meson
-    vala
-    pkg-config
-    gettext
   ];
 
   passthru.updateScript = nix-update-script { };
