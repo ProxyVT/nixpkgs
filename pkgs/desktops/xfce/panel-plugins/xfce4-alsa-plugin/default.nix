@@ -23,19 +23,19 @@ stdenv.mkDerivation (finalAttrs: {
     hash = "sha256-95uVHDyXji8dut7qfE5V/uBBt6DPYF/YfudHe7HJcE8=";
   };
 
-  strictDeps = false;
+  strictDeps = true;
 
   nativeBuildInputs = [
-    meson
-    vala
-    pkg-config
-    gettext
     ninja
   ];
 
   buildInputs = [
     alsa-lib
     xfce4-panel
+    meson
+    vala
+    pkg-config
+    gettext
   ];
 
   passthru.updateScript = nix-update-script { };
