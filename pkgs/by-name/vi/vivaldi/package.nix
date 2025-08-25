@@ -198,7 +198,7 @@ stdenv.mkDerivation rec {
     mkdir -p "$out/share"
     cp -r usr/share/{applications,xfce4} "$out"/share
     substituteInPlace "$out"/share/applications/*.desktop \
-      --replace-fail /usr/bin/vivaldi "$out"/bin/vivaldi
+      --replace-fail /usr/bin/vivaldi vivaldi
     substituteInPlace "$out"/share/applications/*.desktop \
       --replace-fail vivaldi-stable vivaldi
     local d
