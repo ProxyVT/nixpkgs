@@ -20,7 +20,7 @@
   makeWrapper,
   libsForQt5,
   profiles ? {
-    path = "~";
+    path = "~/.local/state";
   },
 }:
 
