@@ -26,6 +26,13 @@ buildNpmPackage rec {
     mkdir -p $out/share
     cp -r dist $out/share/ariang
 
+    mkdir -p $out/bin
+    cat > $out/bin/ariang <<EOF
+    #!/usr/bin/env sh
+    exec xdg-open "file://$out/share/ariang/index.html"
+    EOF
+    chmod +x $out/bin/ariang
+
     runHook postInstall
   '';
 
