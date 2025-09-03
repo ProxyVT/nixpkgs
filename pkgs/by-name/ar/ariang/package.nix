@@ -3,24 +3,12 @@
   makeDesktopItem,
   fetchFromGitHub,
   buildNpmPackage,
+  copyDesktopItems,
+  imagemagick,
+  xdg-utils,
   nix-update-script,
 }:
-let
-  ariangDesktop = makeDesktopItem {
-    name = "ariang";
-    desktopName = "AriaNg";
-    genericName = "Modern web frontend making aria2 easier to use";
-    exec = "ariang";
-    icon = "ariang";
-    terminal = false;
-    type = "Application";
-    categories = [
-      "Network"
-      "WebBrowser"
-    ];
-    mimeTypes = [ "text/html" ];
-  };
-in
+
 buildNpmPackage rec {
   pname = "ariang";
   version = "1.3.11";
@@ -36,39 +24,26 @@ buildNpmPackage rec {
 
   makeCacheWritable = true;
 
+  nativeBuildInputs = [
+    copyDesktopItems
+    imagemagick
+  ];
+
   installPhase = ''
     runHook preInstall
 
     mkdir -p $out/share
     cp -r dist $out/share/${pname}
 
-    mkdir -p $out/share/pixmaps
-    cp $out/share/${pname}/tileicon.png $out/share/pixmaps/${pname}.png
-
-
-
-    mkdir -p $out/bin
-    cat > $out/bin/${pname} <<EOF
-    #!/usr/bin/env sh
-    exec xdg-open "file://$out/share/${pname}/index.html"
-    EOF
-    chmod +x $out/bin/${pname}
-
-    mkdir -p $out/bin
-    cat > $out/bin/ariang <<EOF
-    #!/usr/bin/env sh
-    exec xdg-open "file://$out/share/ariang/index.html"
-    EOF
-    chmod +x $out/bin/ariang
-
-    cp -r ${ariangDesktop}/share/applications $out/share/
-
-    mkdir -p $out/share/pixmaps $out/share/icons/hicolor/32x32/apps
-    for file in $out/share/ariang/favicon.png;
-    do
-      cp $out/share/ariang/favicon.png $out/share/pixmaps/ariang.png
-      cp $out/share/ariang/favicon.png $out/share/icons/hicolor/32x32/apps/ariang.png
+    for size in 16 24 36 48 72; do
+      mkdir -p $out/share/icons/hicolor/''${size}x''${size}/apps
+      magick $out/share/${pname}/tileicon.png -resize ''${size}x''${size} \
+        $out/share/icons/hicolor/''${size}x''${size}/apps/${pname}.png
     done
+
+    mkdir -p $out/bin
+    makeWrapper ${xdg-utils}/bin/xdg-open $out/bin/${pname} \
+      --add-flags "file://$out/share/${pname}/index.html"
 
     runHook postInstall
   '';
