@@ -40,7 +40,19 @@ buildNpmPackage rec {
     runHook preInstall
 
     mkdir -p $out/share
-    cp -r dist $out/share/ariang
+    cp -r dist $out/share/${pname}
+
+    mkdir -p $out/share/pixmaps
+    cp $out/share/${pname}/tileicon.png $out/share/pixmaps/${pname}.png
+
+
+
+    mkdir -p $out/bin
+    cat > $out/bin/${pname} <<EOF
+    #!/usr/bin/env sh
+    exec xdg-open "file://$out/share/${pname}/index.html"
+    EOF
+    chmod +x $out/bin/${pname}
 
     mkdir -p $out/bin
     cat > $out/bin/ariang <<EOF
@@ -61,13 +73,30 @@ buildNpmPackage rec {
     runHook postInstall
   '';
 
+  desktopItems = [
+    (makeDesktopItem {
+      name = pname;
+      desktopName = "AriaNg";
+      genericName = meta.description;
+      comment = meta.description;
+      exec = pname;
+      icon = pname;
+      terminal = false;
+      type = "Application";
+      categories = [
+        "Network"
+        "WebBrowser"
+      ];
+    })
+  ];
+
   passthru.updateScript = nix-update-script { };
 
-  meta = with lib; {
+  meta = {
     description = "Modern web frontend making aria2 easier to use";
     homepage = "http://ariang.mayswind.net/";
-    license = licenses.mit;
-    maintainers = with maintainers; [ stunkymonkey ];
-    platforms = platforms.unix;
+    license = lib.licenses.mit;
+    maintainers = with lib.maintainers; [ stunkymonkey ];
+    platforms = lib.platforms.unix;
   };
 }
