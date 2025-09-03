@@ -1,10 +1,26 @@
 {
   lib,
+  makeDesktopItem,
   fetchFromGitHub,
   buildNpmPackage,
   nix-update-script,
 }:
-
+let
+  ariangDesktop = makeDesktopItem {
+    name = "ariang";
+    desktopName = "AriaNg";
+    genericName = "Modern web frontend making aria2 easier to use";
+    exec = "ariang";
+    icon = "ariang";
+    terminal = false;
+    type = "Application";
+    categories = [
+      "Network"
+      "WebBrowser"
+    ];
+    mimeTypes = [ "text/html" ];
+  };
+in
 buildNpmPackage rec {
   pname = "ariang";
   version = "1.3.11";
@@ -32,6 +48,15 @@ buildNpmPackage rec {
     exec xdg-open "file://$out/share/ariang/index.html"
     EOF
     chmod +x $out/bin/ariang
+
+    cp -r ${ariangDesktop}/share/applications $out/share/
+
+    mkdir -p $out/share/pixmaps $out/share/icons/hicolor/32x32/apps
+    for file in $out/share/ariang/favicon.png;
+    do
+      cp $out/share/ariang/favicon.png $out/share/pixmaps/ariang.png
+      cp $out/share/ariang/favicon.png $out/share/icons/hicolor/32x32/apps/ariang.png
+    done
 
     runHook postInstall
   '';
