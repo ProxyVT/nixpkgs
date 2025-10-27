@@ -46,17 +46,17 @@ buildNpmPackage (finalAttrs: {
     cat > $out/bin/ariang << 'EOF'
     #!${runtimeShell}
     set -eu
-    persistent_dir="\$HOME/.local/share/ariang"
-    version_file="\$persistent_dir/.version"
+    persistent_dir="$HOME/.local/share/ariang"
+    version_file="$persistent_dir/.version"
     current_version="${finalAttrs.version}"
 
-    mkdir -p "\$user_dir"
-    if [ ! -f "\$version_file" ] || [ "$(cat "\$version_file")" != "\$current_version" ]; then
-        cp -r ${placeholder "out"}/share/ariang/* "\$user_dir/"
-        echo "\$current_version" > "\$version_file"
+    mkdir -p "$persistent_dir"
+    if [ ! -f "$version_file" ] || [ "$(cat "$version_file")" != "$current_version" ]; then
+        cp -r ${placeholder "out"}/share/ariang/* "$persistent_dir/"
+        echo "$current_version" > "$version_file"
     fi
 
-    exec ${xdg-utils}/bin/xdg-open "file://\$user_dir/index.html"
+    exec ${xdg-utils}/bin/xdg-open "file://$persistent_dir/index.html"
     EOF
 
     chmod +x $out/bin/ariang
