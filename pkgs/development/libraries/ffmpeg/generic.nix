@@ -450,7 +450,7 @@ stdenv.mkDerivation (
           hash = "sha256-l1t4LcUDSW757diNu69NzvjenW5Mxb5aYtXz64Yl9gs=";
         })
       ]
-      ++ optionals (lib.versionAtLeast version "5.1") [
+      ++ optionals (lib.versionAtLeast version "5.1" && lib.versionOlder version "8.1") [
         ./nvccflags-cpp14.patch
         (fetchpatch2 {
           name = "unbreak-hardcoded-tables.patch";
