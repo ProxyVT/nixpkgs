@@ -450,8 +450,10 @@ stdenv.mkDerivation (
           hash = "sha256-l1t4LcUDSW757diNu69NzvjenW5Mxb5aYtXz64Yl9gs=";
         })
       ]
-      ++ optionals (lib.versionAtLeast version "5.1" && lib.versionOlder version "8.1") [
+      ++ optionals (lib.versionAtLeast version "5.1") [
         ./nvccflags-cpp14.patch
+      ]
+      ++ optionals (lib.versionAtLeast version "6.1" && lib.versionOlder version "8.1") [
         (fetchpatch2 {
           name = "unbreak-hardcoded-tables.patch";
           url = "https://git.ffmpeg.org/gitweb/ffmpeg.git/patch/1d47ae65bf6df91246cbe25c997b25947f7a4d1d";
