@@ -84,6 +84,7 @@ python3Packages.buildPythonApplication rec {
       urllib3
       websockets
       yt-dlp-ejs # keep pinned version in sync!
+      protobug
     ];
     curl-cffi = [ python3Packages.curl-cffi ];
     secretstorage = with python3Packages; [
