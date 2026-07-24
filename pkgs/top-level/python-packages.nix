@@ -14110,6 +14110,8 @@ self: super: with self; {
     inherit (pkgs.__splicedPackages) protobuf;
   };
 
+  protobug = callPackage ../development/python-modules/protobug { };
+
   protoletariat = callPackage ../development/python-modules/protoletariat { };
 
   proton-client = callPackage ../development/python-modules/proton-client { };
